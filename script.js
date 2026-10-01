@@ -32,7 +32,7 @@ const CONFIG = {
   letter: `[สุขสันต์วันเกิดครับขอให้เธอมีความสุขมากๆนะ]`,
 
   // FINAL
-  finalTitle: "Happy Birthday, {name} ❤️",
+  finalTitle: "Happy Birthday, {ครีม} ❤️",
   finalMessage: `ขอให้ปีนี้เป็นปีที่ดีสำหรับเธอ
 มีความสุขมาก ๆ
 และไม่ว่าจะเจออะไร
