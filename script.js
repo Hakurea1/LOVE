@@ -4,7 +4,7 @@
    - ขึ้นบรรทัดใหม่ใน "..." ใช้ \n   (ใน `...` ขึ้นบรรทัดใหม่ได้เลย)
    ========================================================== */
 const CONFIG = {
-  girlfriendName: "ครีม",
+  girlfriendName: "Cream",
 
   // เพลง (ต้องมีไฟล์ที่ assets/music.mp3)
   musicSrc: "assets/music.mp3",
