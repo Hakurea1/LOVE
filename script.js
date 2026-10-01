@@ -7,7 +7,7 @@ const CONFIG = {
   girlfriendName: "Cream",
 
   // เพลง (ต้องมีไฟล์ที่ assets/music.mp3)
-  musicSrc: "assets/music.mp3",
+  musicSrc: "asset/music.mp3",
   musicVolume: 0.6,
 
   // PAGE 1
