@@ -18,7 +18,7 @@ const CONFIG = {
   // PAGE 2
   birthdayTitle: "Happy Birthday 🎂",
   birthdayLine: "วันนี้เป็นวันของเธอนะ",
-  birthdayNote: "แต่ก่อนจะไปถึงคำอวยพรสุดท้าย\nมีอะไรบางอย่างอยากให้เธอดูก่อน",
+  birthdayNote: "แต่ก่อนจะไปถึงคำอวยพรสุดท้าย\nเค้ามีอะไรบางอย่างอยากให้เธอดูก่อน",
   birthdayButton: "ไปดูกัน →",
 
   // PAGE 3
@@ -29,14 +29,14 @@ const CONFIG = {
   letterPrompt: "มีอีกอย่างอยากให้เธออ่าน",
   letterOpenButton: "เปิดจดหมาย",
   letterNextButton: "ไปหน้าสุดท้าย →",
-  letter: `[ใส่ข้อความจากกูถึงแฟนตรงนี้]`,
+  letter: `[สุขสันต์วันเกิดครับขอให้เธอมีความสุขมากๆนะ]`,
 
   // FINAL
   finalTitle: "Happy Birthday, {name} ❤️",
   finalMessage: `ขอให้ปีนี้เป็นปีที่ดีสำหรับเธอ
 มีความสุขมาก ๆ
 และไม่ว่าจะเจออะไร
-กูจะอยู่ข้าง ๆ เธอเสมอ`,
+เค้าจะอยู่ข้าง ๆ เธอเสมอ`,
   finalPhoto: "images/photo1.jpg", // รูปสุดท้าย (เปลี่ยนเป็นรูปไหนก็ได้)
 
   // รูปใน Gallery — เพิ่ม/ลบ/สลับลำดับได้เลย
