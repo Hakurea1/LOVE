@@ -29,7 +29,7 @@ const CONFIG = {
   letterPrompt: "มีอีกอย่างอยากให้เธออ่าน",
   letterOpenButton: "เปิดจดหมาย",
   letterNextButton: "ไปหน้าสุดท้าย →",
-  letter: `[สุขสันต์วันเกิดครับขอให้เธอมีความสุขมากๆนะ]`,
+  letter: `[สุขสันต์วันเกิดครับขอให้เธอมีความนะคะ]`,
 
   // FINAL
   finalTitle: "Happy Birthday, {name} ❤️",
