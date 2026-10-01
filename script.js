@@ -4,7 +4,7 @@
    - ขึ้นบรรทัดใหม่ใน "..." ใช้ \n   (ใน `...` ขึ้นบรรทัดใหม่ได้เลย)
    ========================================================== */
 const CONFIG = {
-  girlfriendName: "ชื่อแฟน",
+  girlfriendName: "ครีม",
 
   // เพลง (ต้องมีไฟล์ที่ assets/music.mp3)
   musicSrc: "assets/music.mp3",
@@ -32,7 +32,7 @@ const CONFIG = {
   letter: `[สุขสันต์วันเกิดครับขอให้เธอมีความสุขมากๆนะ]`,
 
   // FINAL
-  finalTitle: "Happy Birthday, {ครีม} ❤️",
+  finalTitle: "Happy Birthday, {name} ❤️",
   finalMessage: `ขอให้ปีนี้เป็นปีที่ดีสำหรับเธอ
 มีความสุขมาก ๆ
 และไม่ว่าจะเจออะไร
