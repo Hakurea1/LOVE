@@ -41,7 +41,7 @@ const CONFIG = {
 
   // รูปใน Gallery — เพิ่ม/ลบ/สลับลำดับได้เลย
   photos: [
-    { src: "images/photo1.jpg", caption: "จำวันที่นี้ได้ไหม?" },
+    { src: "asset/1st.jpg", caption: "จำวันนี้ได้ไหม?" },
     { src: "images/photo2.jpg", caption: "ช่วงเวลาที่เรายิ้มด้วยกัน" },
     { src: "images/photo3.jpg", caption: "อีกหนึ่งความทรงจำที่กูชอบ" },
     { src: "images/photo4.jpg", caption: "วันธรรมดาที่กลายเป็นวันพิเศษ" },
