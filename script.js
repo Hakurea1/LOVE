@@ -45,7 +45,7 @@ const CONFIG = {
     { src: "images/hd2.jpg", caption: "ช่วงเวลาที่เรายิ้มด้วยกัน" },
     { src: "images/sea.jpg", caption: "จำวันที่เราไปเที่ยวครั้งแรกได้มั้ย" },
     { src: "asset/sket.mp4", caption: "วันที่เธอไปเล่นIce Sket แล้วเค้านั่งดู" },
-    { src: "images/photo5.jpg", caption: "รูปนี้ดูทีไรก็ยิ้ม" },
+    { src: "images/ca2.jpg", caption: "รูปนี้ดูทีไรก็ยิ้ม" },
     { src: "asset/lastV", caption: "และจะมีอีกเยอะ ๆ ต่อจากนี้" }
   ]
 };
