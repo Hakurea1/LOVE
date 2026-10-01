@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#2a1740">
+  <title>สำหรับเธอ ❤️</title>
+
+  <!-- ฟอนต์ไทย: Maitree (หัวข้อ/ตัวอักษรนุ่ม ๆ) + Mali (ข้อความลายมือ) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Maitree:wght@400;500;600&family=Mali:wght@400;500&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- พื้นหลัง + particles -->
+  <div id="bg" aria-hidden="true"></div>
+  <canvas id="fx" aria-hidden="true"></canvas>
+
+  <!-- ปุ่มเพลง (โผล่หลังกด "เปิดดูสิ") -->
+  <button id="music" class="music" type="button" aria-label="เปิดหรือปิดเพลง" aria-pressed="false">
+    <span class="music-icon" aria-hidden="true">🎵</span>
+    <span class="eq" aria-hidden="true"><i></i><i></i><i></i></span>
+    <span class="music-label" id="music-label">หยุดอยู่</span>
+  </button>
+
+  <main>
+
+    <!-- PAGE 1 — INTRO -->
+    <section class="page active" data-page="intro">
+      <div class="page-inner">
+        <h1 class="reveal" style="--i:0" data-cfg="introTitle"></h1>
+        <p class="sub reveal" style="--i:1" data-cfg="introSub"></p>
+        <button id="start" class="btn pulse reveal" style="--i:2" type="button" data-cfg="introButton"></button>
+      </div>
+    </section>
+
+    <!-- PAGE 2 — BIRTHDAY -->
+    <section class="page" data-page="birthday">
+      <div class="page-inner">
+        <h1 class="big reveal" style="--i:0" data-cfg="birthdayTitle"></h1>
+        <p class="lead reveal" style="--i:1" data-cfg="birthdayLine"></p>
+        <p class="sub note reveal" style="--i:2" data-cfg="birthdayNote"></p>
+        <button id="to-memories" class="btn reveal" style="--i:3" type="button" data-cfg="birthdayButton"></button>
+      </div>
+    </section>
+
+    <!-- PAGE 3 — OUR MEMORIES -->
+    <section class="page" data-page="memories">
+      <div class="page-inner">
+        <h2 data-cfg="memoriesTitle"></h2>
+        <div id="gallery" class="gallery"></div>
+        <button id="to-letter" class="btn" type="button" data-cfg="memoriesButton"></button>
+      </div>
+    </section>
+
+    <!-- PAGE 4 — LETTER -->
+    <section class="page" data-page="letter">
+      <div class="page-inner">
+        <div id="envelope-wrap" class="envelope-wrap">
+          <p class="lead" id="letter-prompt" data-cfg="letterPrompt"></p>
+          <div class="envelope" id="envelope" aria-hidden="true">
+            <div class="env-back"></div>
+            <div class="env-paper"><span></span><span></span><span></span></div>
+            <div class="env-front"></div>
+            <div class="env-flap"></div>
+            <div class="env-seal">❤</div>
+          </div>
+          <button id="open-letter" class="btn" type="button" data-cfg="letterOpenButton"></button>
+        </div>
+
+        <article id="letter-card" class="letter-card" hidden>
+          <p id="letter-text" class="letter-text"></p>
+          <button id="to-final" class="btn" type="button" data-cfg="letterNextButton"></button>
+        </article>
+      </div>
+    </section>
+
+    <!-- FINAL PAGE -->
+    <section class="page" data-page="final">
+      <div class="page-inner">
+        <svg class="beat" viewBox="0 0 32 29" aria-hidden="true">
+          <path d="M16 28.5C-9 12 6-3 16 7.5 26-3 41 12 16 28.5Z"/>
+        </svg>
+        <h1 class="reveal" style="--i:0" id="final-title" data-cfg="finalTitle"></h1>
+        <p class="final-msg reveal" style="--i:1" data-cfg="finalMessage"></p>
+        <div class="final-photo reveal" style="--i:2" id="final-photo"></div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Lightbox (เปิดรูปเต็มจอ) -->
+  <div id="lightbox" class="lightbox" aria-hidden="true" role="dialog" aria-modal="true" aria-label="ดูรูป">
+    <button class="lb-close" type="button" aria-label="ปิด">✕</button>
+    <button class="lb-nav prev" type="button" aria-label="รูปก่อนหน้า">‹</button>
+    <figure class="lb-figure">
+      <img id="lb-img" alt="">
+      <figcaption id="lb-cap"></figcaption>
+    </figure>
+    <button class="lb-nav next" type="button" aria-label="รูปถัดไป">›</button>
+    <div class="lb-count" id="lb-count"></div>
+  </div>
+
+  <script src="script.js" defer></script>
+</body>
+</html>
