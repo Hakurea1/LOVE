@@ -46,7 +46,7 @@ const CONFIG = {
     { src: "images/sea.jpg", caption: "จำวันที่เราไปเที่ยวครั้งแรกได้มั้ย" },
     { src: "asset/sket.mp4", caption: "วันที่เธอไปเล่นIce Sket แล้วเค้านั่งดู" },
     { src: "images/ca2.jpg", caption: "รูปนี้ดูทีไรก็ยิ้ม" },
-    { src: "asset/Cla", caption: "และจะมีอีกเยอะ ๆ ต่อจากนี้" }
+    { src: "asset/footage1.mp4", caption: "และจะมีอีกเยอะ ๆ ต่อจากนี้" }
   ]
 };
 
