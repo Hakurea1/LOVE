@@ -436,3 +436,8 @@ h2 { font-size: clamp(1.7rem, 6.5vw, 2.5rem); }
     transition-delay: 0s !important;
   }
 }
+
+/* ซ่อนปุ่มเสียงในแถบควบคุมวิดีโอ (วิดีโอไม่มีเสียง) */
+video::-webkit-media-controls-mute-button,
+video::-webkit-media-controls-volume-slider,
+video::-webkit-media-controls-volume-control-container { display: none !important; }
