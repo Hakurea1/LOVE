@@ -212,10 +212,21 @@ h2 { font-size: clamp(1.7rem, 6.5vw, 2.5rem); }
   background: linear-gradient(135deg, #f7c6d3, #d9ccff);
 }
 .shot .frame { aspect-ratio: 4 / 5; border-radius: 10px; }
-.shot img, .final-photo img {
+.shot img, .shot video, .final-photo img, .final-photo video {
   display: block;
   width: 100%; height: 100%;
   object-fit: cover;
+}
+.play-badge {
+  position: absolute; right: 8px; bottom: 8px;
+  display: grid; place-items: center;
+  width: 30px; height: 30px;
+  border-radius: 50%;
+  background: rgba(20, 10, 32, .55);
+  color: #fff;
+  font-size: .75rem;
+  padding-left: 2px;
+  pointer-events: none;
 }
 .shot figcaption {
   padding: 9px 4px 2px;
@@ -223,7 +234,7 @@ h2 { font-size: clamp(1.7rem, 6.5vw, 2.5rem); }
   line-height: 1.55;
 }
 /* ถ้ารูปยังไม่ใส่/โหลดไม่ได้ — ขึ้นกรอบหัวใจแทน ไม่พัง */
-.missing img { display: none; }
+.missing img, .missing video, .missing .play-badge { display: none; }
 .missing.frame::after, .missing.final-photo::after {
   content: "❤";
   position: absolute; inset: 0;
@@ -257,7 +268,7 @@ h2 { font-size: clamp(1.7rem, 6.5vw, 2.5rem); }
   transition: transform .35s ease;
 }
 .lightbox.open .lb-figure { transform: none; }
-.lb-figure img {
+.lb-figure img, .lb-figure video {
   display: block;
   margin: 0 auto;
   max-width: min(92vw, 900px);
@@ -266,6 +277,8 @@ h2 { font-size: clamp(1.7rem, 6.5vw, 2.5rem); }
   border-radius: 14px;
   box-shadow: 0 20px 60px rgba(0, 0, 0, .5);
 }
+.lb-figure video { background: #000; }
+.lb-figure [hidden] { display: none; }
 .lb-figure figcaption {
   margin-top: 16px;
   padding: 0 8px;
