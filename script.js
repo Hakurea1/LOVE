@@ -197,16 +197,10 @@ lbVideo.loop = true;
 lbVideo.hidden = true;
 lbImg.before(lbVideo);
 
-// ระหว่างดูวิดีโอ ให้พักเพลงพื้นหลังไว้ แล้วเปิดต่อเมื่อวิดีโอหยุด/ปิดหน้าต่าง
-let resumeMusic = false;
-lbVideo.addEventListener("play", () => {
-  if (!audio.paused) { audio.pause(); resumeMusic = true; }
-});
-function releaseMusic() {
-  if (resumeMusic) { resumeMusic = false; playMusic(); }
-}
-lbVideo.addEventListener("pause", releaseMusic);
-lbVideo.addEventListener("ended", releaseMusic);
+// วิดีโอไม่มีเสียงเสมอ เพลงพื้นหลังจะได้ไม่ถูกขัด
+lbVideo.muted = true;
+lbVideo.defaultMuted = true;
+lbVideo.addEventListener("volumechange", () => { if (!lbVideo.muted) lbVideo.muted = true; });
 lbVideo.addEventListener("error", () => { lbCap.textContent = "เปิดวิดีโอนี้ไม่ได้ ลองรีเฟรชหรือเปลี่ยนเบราว์เซอร์นะ"; });
 
 function stopLbVideo() {
@@ -226,7 +220,7 @@ function showPhoto(i) {
     lbImg.removeAttribute("src");
     lbVideo.hidden = false;
     lbVideo.src = p.src;
-    lbVideo.muted = false;
+    lbVideo.muted = true;
     lbVideo.play().catch(() => {});     // ถ้าเบราว์เซอร์บล็อก ผู้ใช้กดปุ่ม play เองได้
   } else {
     lbImg.hidden = false;
@@ -296,6 +290,7 @@ $("#open-letter").addEventListener("click", (e) => {
   if (isVideo(CONFIG.finalPhoto)) {
     const vid = makeVideo({ src: CONFIG.finalPhoto, controls: true, autoplay: false });
     vid.addEventListener("error", () => box.classList.add("missing"));
+    vid.addEventListener("volumechange", () => { if (!vid.muted) vid.muted = true; });
     box.appendChild(vid);
     finalVideo = vid;
   } else {
