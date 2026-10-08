@@ -67,6 +67,7 @@ const pages = $$(".page");
 const PAGE_MODE = { intro: "dream", birthday: "party", memories: "dream", letter: "dream", final: "party" };
 let current = 0;
 let busy = false;
+let finalVideo = null;
 
 function goTo(i) {
   if (busy || i === current) return;
@@ -80,7 +81,12 @@ function goTo(i) {
   to.classList.add("active");
   current = i;
   setMode(PAGE_MODE[to.dataset.page] || "dream");
-  if (to.dataset.page === "final") launchConfetti();
+  if (to.dataset.page === "final") {
+    launchConfetti();
+    if (finalVideo) finalVideo.play().catch(() => {});
+  } else if (finalVideo) {
+    finalVideo.pause();
+  }
   setTimeout(() => { from.classList.remove("out"); busy = false; }, 750);
 }
 
@@ -116,6 +122,25 @@ $("#to-letter").addEventListener("click", () => goTo(3));
 $("#to-final").addEventListener("click", () => goTo(4));
 
 /* ---------- Gallery + Lightbox ---------- */
+const isVideo = (src) => /\.(mp4|m4v|mov|webm)(\?|#|$)/i.test(src);
+
+// สร้าง <video> สำหรับไฟล์วิดีโอ / <img> สำหรับรูป (<img> เล่น .mp4 ไม่ได้ใน Chrome/Android — Safari เท่านั้นที่เล่นได้)
+function makeVideo({ src, controls = false, autoplay = true }) {
+  const v = document.createElement("video");
+  v.muted = true;                       // ต้อง muted ถึงจะ autoplay ได้ทุกเบราว์เซอร์
+  v.defaultMuted = true;
+  v.setAttribute("muted", "");
+  v.loop = true;
+  v.playsInline = true;                 // iOS ไม่เด้งเต็มจอ
+  v.setAttribute("playsinline", "");
+  v.setAttribute("webkit-playsinline", "");
+  v.controls = controls;
+  v.preload = "metadata";
+  v.autoplay = autoplay;
+  v.src = src + "#t=0.001";             // โชว์เฟรมแรกถ้า autoplay ไม่ทำงาน (เช่น โหมดประหยัดแบตบน iOS)
+  return v;
+}
+
 const gallery = $("#gallery");
 CONFIG.photos.forEach((p, i) => {
   const fig = document.createElement("figure");
@@ -127,13 +152,24 @@ CONFIG.photos.forEach((p, i) => {
 
   const frame = document.createElement("div");
   frame.className = "frame";
-  const img = document.createElement("img");
-  img.loading = "lazy";
-  img.decoding = "async";
-  img.alt = fill(p.caption);
-  img.addEventListener("error", () => frame.classList.add("missing"));
-  img.src = p.src;
-  frame.appendChild(img);
+  if (isVideo(p.src)) {
+    const vid = makeVideo({ src: p.src });
+    vid.addEventListener("error", () => frame.classList.add("missing"));
+    frame.appendChild(vid);
+    const badge = document.createElement("span");
+    badge.className = "play-badge";
+    badge.setAttribute("aria-hidden", "true");
+    badge.textContent = "▶";
+    frame.appendChild(badge);
+  } else {
+    const img = document.createElement("img");
+    img.loading = "lazy";
+    img.decoding = "async";
+    img.alt = fill(p.caption);
+    img.addEventListener("error", () => frame.classList.add("missing"));
+    img.src = p.src;
+    frame.appendChild(img);
+  }
 
   const cap = document.createElement("figcaption");
   cap.textContent = fill(p.caption);
@@ -149,12 +185,54 @@ const lbCount = $("#lb-count");
 let lbIndex = 0;
 let lastFocus = null;
 
+// วิดีโอในหน้าต่าง lightbox (สร้างครั้งเดียว ใช้ซ้ำ)
+const lbVideo = document.createElement("video");
+lbVideo.id = "lb-video";
+lbVideo.controls = true;
+lbVideo.playsInline = true;
+lbVideo.setAttribute("playsinline", "");
+lbVideo.setAttribute("webkit-playsinline", "");
+lbVideo.preload = "auto";
+lbVideo.loop = true;
+lbVideo.hidden = true;
+lbImg.before(lbVideo);
+
+// ระหว่างดูวิดีโอ ให้พักเพลงพื้นหลังไว้ แล้วเปิดต่อเมื่อวิดีโอหยุด/ปิดหน้าต่าง
+let resumeMusic = false;
+lbVideo.addEventListener("play", () => {
+  if (!audio.paused) { audio.pause(); resumeMusic = true; }
+});
+function releaseMusic() {
+  if (resumeMusic) { resumeMusic = false; playMusic(); }
+}
+lbVideo.addEventListener("pause", releaseMusic);
+lbVideo.addEventListener("ended", releaseMusic);
+lbVideo.addEventListener("error", () => { lbCap.textContent = "เปิดวิดีโอนี้ไม่ได้ ลองรีเฟรชหรือเปลี่ยนเบราว์เซอร์นะ"; });
+
+function stopLbVideo() {
+  lbVideo.pause();
+  lbVideo.removeAttribute("src");
+  lbVideo.load();
+  lbVideo.hidden = true;
+}
+
 function showPhoto(i) {
   const n = CONFIG.photos.length;
   lbIndex = (i + n) % n;
   const p = CONFIG.photos[lbIndex];
-  lbImg.src = p.src;
-  lbImg.alt = fill(p.caption);
+  stopLbVideo();
+  if (isVideo(p.src)) {
+    lbImg.hidden = true;
+    lbImg.removeAttribute("src");
+    lbVideo.hidden = false;
+    lbVideo.src = p.src;
+    lbVideo.muted = false;
+    lbVideo.play().catch(() => {});     // ถ้าเบราว์เซอร์บล็อก ผู้ใช้กดปุ่ม play เองได้
+  } else {
+    lbImg.hidden = false;
+    lbImg.src = p.src;
+    lbImg.alt = fill(p.caption);
+  }
   lbCap.textContent = fill(p.caption);
   lbCount.textContent = `${lbIndex + 1} / ${n}`;
 }
@@ -166,6 +244,7 @@ function openLightbox(i) {
   $(".lb-close", lb).focus();
 }
 function closeLightbox() {
+  stopLbVideo();
   lb.classList.remove("open");
   lb.setAttribute("aria-hidden", "true");
   if (lastFocus) lastFocus.focus();
@@ -214,11 +293,18 @@ $("#open-letter").addEventListener("click", (e) => {
 /* ---------- รูปสุดท้าย ---------- */
 (() => {
   const box = $("#final-photo");
-  const img = document.createElement("img");
-  img.alt = fill(CONFIG.finalTitle);
-  img.addEventListener("error", () => box.classList.add("missing"));
-  img.src = CONFIG.finalPhoto;
-  box.appendChild(img);
+  if (isVideo(CONFIG.finalPhoto)) {
+    const vid = makeVideo({ src: CONFIG.finalPhoto, controls: true, autoplay: false });
+    vid.addEventListener("error", () => box.classList.add("missing"));
+    box.appendChild(vid);
+    finalVideo = vid;
+  } else {
+    const img = document.createElement("img");
+    img.alt = fill(CONFIG.finalTitle);
+    img.addEventListener("error", () => box.classList.add("missing"));
+    img.src = CONFIG.finalPhoto;
+    box.appendChild(img);
+  }
 })();
 
 /* ==========================================================
